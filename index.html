@@ -10,11 +10,13 @@
 .header-actions,.word-actions{display:flex;gap:8px;flex-wrap:wrap}.header-actions{justify-content:flex-end}.word{overflow-wrap:anywhere}.toolbar>div:first-child{min-width:0}.fish span{white-space:normal;overflow-wrap:anywhere;line-height:1.12;max-width:77%;margin-left:9%}dialog{width:min(560px,calc(100% - 32px));max-height:90vh;overflow:auto;border:1px solid #417b88;border-radius:18px;background:#0d2b3e;color:#eefafa;padding:22px}dialog::backdrop{background:#031522c9}dialog h2{margin:0 0 12px}dialog label{display:block;font-weight:750}dialog p{color:#c4e6e9;line-height:1.45}textarea{width:100%;min-height:148px;resize:vertical;background:#061c2c;color:#eefafa;border:1px solid #5b8a97;border-radius:9px;padding:10px;font:inherit}#word-error{color:#ffc69b}.word-actions .start{padding:8px 14px}@media(max-width:420px){.brand{gap:6px}h1{font-size:19px}.header-actions .reset{padding:7px 9px}.mark{font-size:16px}}
 .tank{container-type:inline-size}.lake button.fish{width:clamp(105px,21cqw,158px)}.lake{position:absolute;inset:0 auto auto 0;overflow:hidden;background:linear-gradient(#338d9d 0%,#176579 16%,#0b455e 49%,#092e48 84%,#072338 100%)}.lake:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(112deg,transparent 0 11%,#a2f8ee19 14%,transparent 20%);mask-image:linear-gradient(black,transparent 65%);pointer-events:none}.surface{position:absolute;inset:0 0 auto;height:17px;border-bottom:2px solid #acffefb0;background:#65bdc4;box-shadow:0 0 25px #8afee676;pointer-events:none}.lake .bed{bottom:-16px}.predator{--color:#b63353;width:146px;height:73px;z-index:3;pointer-events:none}.predator[hidden]{display:none}.predator:before{inset:0 0 0 14%}.predator i{position:absolute;width:12px;height:12px;right:15%;top:25%;border:3px solid #fff1dd;border-radius:50%;background:#380b1d}.predator i:after{content:"";position:absolute;top:20px;left:0;width:18px;height:9px;background:#fff1dd;clip-path:polygon(0 0,100% 0,77% 100%,52% 0,25% 100%)}.predator.left{scale:-1 1}.map{position:absolute;right:10px;bottom:10px;z-index:3;width:103px;height:72px;border:1px solid #76c3cc8c;border-radius:8px;background:#061c2cd9;pointer-events:none}.map[hidden]{display:none}.map span{position:absolute;width:6px;height:6px;border-radius:50%;transform:translate(-50%,-50%);background:#ffd396}.map .map-player{width:8px;height:8px;background:#74f3d4;z-index:1}.map .map-predator{background:#ff6a87}.map span[hidden]{display:none}.chase{position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:4;background:#381529;color:#ffd3db;border:1px solid #ff96a6;border-radius:9px;padding:6px 12px;font-weight:800;font-size:13px;white-space:nowrap;pointer-events:none}.overlay{z-index:5}.fish span{font-size:clamp(11px,1.75vw,16px)}.fish.long{height:62px}.map-legend{position:absolute;right:10px;bottom:85px;z-index:3;font-size:10px;color:#ecfffa;background:#082b3bdb;padding:2px 5px;border-radius:4px;pointer-events:none}
 .card p{margin-bottom:12px}.overlay{overflow:auto}
+.context-picker{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px;margin-top:16px}.context-picker label{font-weight:750}.context-picker select{font:inherit;max-width:100%;padding:8px 10px;border:1px solid #5b8a97;border-radius:9px;background:#0d2b3e;color:#eefafa}.word.context-prompt{font-size:clamp(18px,3vw,28px);letter-spacing:-.015em}.fish.long{height:72px}
 </style>
 </head>
 <body><main>
 <header><div class="brand"><span class="mark" aria-hidden="true">◀</span><h1>French Fish</h1></div><div class="header-actions"><button class="reset" id="edit-words" type="button">Word list</button><button class="reset" id="reset" type="button">Restart</button></div></header>
-<section class="toolbar" aria-label="Current word and score"><div><div class="caption">Find the English translation</div><div class="word" id="word" lang="fr" aria-live="polite">—</div></div><div class="progress"><div class="caption">Correct</div><strong id="score">0 / 12</strong></div></section>
+<div class="context-picker"><label for="context">Choose a context</label><select id="context"></select></div>
+<section class="toolbar" aria-label="Current prompt and score"><div><div class="caption" id="prompt-label">Find the French answer</div><div class="word" id="word" lang="fr" aria-live="polite">—</div></div><div class="progress"><div class="caption">Correct</div><strong id="score">0 / 12</strong></div></section>
 <section class="tank" id="tank" aria-label="Playing area">
 <div class="lake" id="lake">
 <div class="surface"></div><div class="bed"></div><div id="scenery" aria-hidden="true"></div>
@@ -24,7 +26,7 @@
 <div class="map" id="map" aria-label="Lake map" hidden><span class="map-player" id="map-player"></span><span class="map-predator" id="map-predator" hidden></span></div>
 <div class="map-legend" id="map-legend" hidden>Lake map</div>
 <div class="chase" id="chase" role="status" hidden>Predator nearby! Keep swimming.</div>
-<div class="overlay" id="overlay"><div class="card"><h2 id="title">French Fish</h2><p id="intro">Swim into the fish with the English translation. Each correct catch makes your fish bigger.</p><p>Answer fish can be anywhere in the lake. Use the arrow keys to swim up to the surface, down to the lakebed, or left and right. Check the lake map to find them.</p><p>If the red predator appears, keep swimming. Evade it for 6 seconds and it will go away.</p><button class="start" id="start" type="button">Start swimming</button></div></div>
+<div class="overlay" id="overlay"><div class="card"><h2 id="title">French Fish</h2><p id="intro">Choose a context and swim into the fish that fits each situation. Each correct catch makes your fish bigger.</p><p>Answer fish can be anywhere in the lake. Use the arrow keys to swim up to the surface, down to the lakebed, or left and right. Check the lake map to find them.</p><p>If the red predator appears, keep swimming. Evade it for 6 seconds and it will go away.</p><button class="start" id="start" type="button">Start swimming</button></div></div>
 </section>
 <footer><p class="feedback" id="feedback" role="status"></p><p><kbd>Arrow keys</kbd> / <kbd>WASD</kbd> or drag to swim · Click or tap a fish to choose</p></footer>
 </main>
@@ -38,7 +40,7 @@
 <div class="word-actions">
 <button class="start" id="play-custom" type="button">Play custom list</button>
 <button class="reset" id="download-custom" type="button">Download custom game</button>
-<button class="reset" id="use-builtin" type="button">Play built-in words</button>
+<button class="reset" id="use-builtin" type="button">Play vocabulary review</button>
 <button class="reset" id="close-words" type="button">Close</button>
 </div>
 </dialog>
@@ -82,6 +84,67 @@ const builtInWords = [
   ["Je ne comprends pas.","I don't understand."],
   ["À quelle heure ?","At what time?"]
 ];
+const contexts = [
+  {
+    id: 'registration', title: 'Register for a French class', challenges: [
+      ['Fill out the registration form. Which field asks for your first name?', 'prénom', 'nom de famille', 'ville', 'pays'],
+      ['Now find the field for your last name.', 'nom de famille', 'prénom', 'pays', 'adresse e-mail'],
+      ['The school will send your confirmation by email. Which field should you fill in?', 'adresse e-mail', 'numéro de téléphone', 'ville', 'pays'],
+      ['The school can also call you. Which field asks for your phone number?', 'numéro de téléphone', 'adresse e-mail', 'prénom', 'ville']
+    ]
+  },
+  {
+    id: 'reception', title: 'Greet someone at an evening event', challenges: [
+      ['It’s 7 p.m. and you’re meeting the host for the first time. How do you greet them?', 'Bonsoir !', 'Au revoir !', 'Bonne soirée !', 'À demain !'],
+      ['A guest introduces herself. How do you say that you’re pleased to meet her?', 'Enchanté(e) !', 'À bientôt !', 'À demain !', 'Bonne soirée !'],
+      ['You’re leaving. Wish the host a good evening.', 'Bonne soirée !', 'Bonne journée !', 'Bonjour !', 'Enchanté(e) !']
+    ]
+  },
+  {
+    id: 'badge', title: 'Make a name badge for a mixer', challenges: [
+      ['Your name is Camille. Choose the introduction that belongs on your badge.', 'Je m’appelle Camille.', 'Je m’appelle Lina.', 'Je m’appelle Alex.', 'Je m’appelle Sam.'],
+      ['Your badge should say you’re from Canada. Which line fits?', 'Je viens du Canada.', 'Je viens de France.', 'Je viens de Belgique.', 'Je viens de Suisse.'],
+      ['Choose the line that says you speak French and English.', 'Je parle français et anglais.', 'Je parle français et espagnol.', 'Je parle anglais et allemand.', 'Je parle espagnol et allemand.']
+    ]
+  },
+  {
+    id: 'exchange', title: 'Find a language exchange partner', challenges: [
+      ['You want to practice French. Find someone who says they speak French.', 'Je parle français.', 'Je parle espagnol.', 'Je parle allemand.', 'J’apprends le français.'],
+      ['You can help your partner with English. Find someone who says they’re learning it.', 'J’apprends l’anglais.', 'J’apprends l’espagnol.', 'J’apprends le français.', 'Je parle un peu allemand.'],
+      ['Tell your partner you speak a little French.', 'Je parle un peu français.', 'Je parle un peu anglais.', 'Je parle espagnol.', 'J’apprends l’anglais.']
+    ]
+  },
+  {
+    id: 'guests', title: 'Match guests to their name badges', challenges: [
+      ['Lina says, « Je suis médecin. » Choose the job title for her badge.', 'médecin', 'professeure', 'étudiante', 'infirmière'],
+      ['Alex says, « Je suis professeur. » Choose the job title for his badge.', 'professeur', 'médecin', 'étudiant', 'infirmier'],
+      ['Sam says, « Je suis étudiant. » Choose the description for his badge.', 'étudiant', 'professeur', 'médecin', 'infirmier']
+    ]
+  },
+  {
+    id: 'phone', title: 'Save a classmate’s phone number', challenges: [
+      ['A classmate gives you this number: « zéro six, douze, vingt-trois, trente, vingt ». Catch the first group.', '06', '12', '23', '30'],
+      ['You’ve entered 06. Your classmate says « douze » next. Catch that group.', '12', '02', '20', '23'],
+      ['You’ve entered 06 12. Catch « vingt-trois ».', '23', '30', '32', '20'],
+      ['You’ve entered 06 12 23. Catch « trente ».', '30', '03', '13', '23'],
+      ['Finish the number. Catch « vingt ».', '20', '02', '12', '30']
+    ]
+  },
+  {
+    id: 'event', title: 'Find the right event', challenges: [
+      ['You’re free on Saturday evening. Which event listing fits your schedule?', 'samedi soir', 'samedi matin', 'dimanche soir', 'samedi après-midi'],
+      ['You can arrive at 7 p.m. Find the listing with that start time.', 'à 19 heures', 'à 18 heures', 'à 9 heures', 'à 17 heures'],
+      ['Your friend can only go on Sunday afternoon. Find a listing that works for them.', 'dimanche après-midi', 'dimanche matin', 'samedi après-midi', 'dimanche soir']
+    ]
+  },
+  {
+    id: 'clarification', title: 'Ask someone to repeat their name', challenges: [
+      ['You missed the person’s name. Which question directly asks them to repeat it?', 'Vous pouvez répéter ?', 'D’où venez-vous ?', 'À quelle heure ?', 'Quel est votre métier ?'],
+      ['They repeat it, but too quickly. Ask them to speak more slowly.', 'Plus lentement, s’il vous plaît.', 'Comment ça s’écrit ?', 'Merci !', 'Je m’appelle Camille.'],
+      ['You want to write the name down. Ask how it’s spelled.', 'Comment ça s’écrit ?', 'Comment allez-vous ?', 'D’où venez-vous ?', 'Quel est votre métier ?']
+    ]
+  }
+];
 const maxRounds = 12;
 const colors = ['#ffc179','#9cc8ff','#ff9bb4','#b3e7a4'];
 const byId = id => document.getElementById(id);
@@ -94,8 +157,17 @@ if (!embeddedWords) {
   try { savedList = localStorage.getItem(listStorageKey) || ''; } catch {}
 }
 wordList.value = embeddedWords ? embeddedWords.map(pair => pair.join(' | ')).join('\n') : savedList;
+const contextPicker = byId('context');
+const reviewMode = 'review', customMode = 'custom';
+for (const {id, title} of [...contexts, {id:reviewMode, title:'Vocabulary review (French to English)'}, {id:customMode, title:'Custom vocabulary'}]) {
+  contextPicker.add(new Option(title, id));
+}
 let activeWords = embeddedWords || builtInWords;
-let total = Math.min(maxRounds, activeWords.length);
+let activeContext = embeddedWords ? null : contexts[0];
+contextPicker.value = embeddedWords ? customMode : activeContext.id;
+const customOption = contextPicker.options[contextPicker.options.length - 1];
+customOption.hidden = customOption.disabled = !embeddedWords;
+let total = activeContext?.challenges.length ?? Math.min(maxRounds, activeWords.length);
 byId('score').textContent = '0 / ' + total;
 const tank = byId('tank'), player = byId('player'), overlay = byId('overlay');
 const lake = byId('lake'), predator = byId('predator'), map = byId('map');
@@ -167,16 +239,18 @@ function clearTargets() {
 }
 function nextRound() {
   clearTargets();
-  const [french, english] = deck[count];
-  word.textContent = french;
-  const distractors = shuffle(activeWords.filter(entry => entry[1] !== english)).slice(0,3).map(entry => entry[1]);
-  targets = shuffle([english, ...distractors]).map((answer, index) => {
+  const [prompt, correct, ...contextDistractors] = deck[count];
+  word.textContent = prompt;
+  const distractors = activeContext ? contextDistractors :
+    shuffle(activeWords.filter(entry => entry[1] !== correct)).slice(0,3).map(entry => entry[1]);
+  targets = shuffle([correct, ...distractors]).map((answer, index) => {
     const element = document.createElement('button');
     element.type = 'button';
     element.className = answer.length > 22 ? 'fish long' : 'fish';
     element.style.setProperty('--color', colors[index]);
     const label = document.createElement('span');
     label.textContent = answer;
+    label.lang = activeContext && activeContext.id !== 'phone' ? 'fr' : 'en';
     element.append(label);
     const dot = document.createElement('span');
     map.append(dot);
@@ -232,10 +306,37 @@ function playCatchSound() {
   tone.start(start);
   tone.stop(start + .21);
 }
+function updatePromptStyle() {
+  byId('prompt-label').textContent = activeContext?.title ?? 'Find the English translation';
+  word.classList.toggle('context-prompt', Boolean(activeContext));
+  word.lang = activeContext ? 'en' : 'fr';
+}
+function showStart() {
+  running = false;
+  keys.clear();
+  pointer = null;
+  endChase();
+  clearTargets();
+  count = 0;
+  total = activeContext?.challenges.length ?? Math.min(maxRounds, activeWords.length);
+  score.textContent = '0 / ' + total;
+  updatePromptStyle();
+  word.textContent = '—';
+  showFeedback('');
+  map.hidden = true;
+  byId('map-legend').hidden = true;
+  byId('title').textContent = 'French Fish';
+  byId('intro').textContent = activeContext
+    ? 'Swim into the fish that fits each situation. Each correct catch makes your fish bigger.'
+    : 'Swim into the fish with the English translation. Each correct catch makes your fish bigger.';
+  byId('start').textContent = 'Start swimming';
+  overlay.hidden = false;
+}
 function begin() {
   enableCatchSound();
-  total = Math.min(maxRounds, activeWords.length);
-  deck = shuffle(activeWords).slice(0,total);
+  updatePromptStyle();
+  deck = activeContext?.challenges ?? shuffle(activeWords).slice(0,maxRounds);
+  total = deck.length;
   count = 0;
   mistakes = 0;
   keys.clear();
@@ -256,20 +357,20 @@ function begin() {
 }
 function choose(target) {
   if (!running || target.missed || !targets.includes(target)) return;
-  const [french, english] = deck[count];
-  if (target.answer !== english) {
+  const [prompt, correct] = deck[count];
+  if (target.answer !== correct) {
     target.missed = true;
     target.dot.hidden = true;
     target.element.disabled = true;
     target.element.classList.add('miss');
     mistakes++;
-    showFeedback('Try again. “' + target.answer + '” is a different word.', 'bad');
+    showFeedback('“' + target.answer + '” doesn’t fit this prompt. Try again.', 'bad');
     return;
   }
   count++;
   playCatchSound();
   score.textContent = count + ' / ' + total;
-  showFeedback('Correct! ' + french + ' = ' + english + '.', 'good');
+  showFeedback(activeContext ? 'Correct! ' + correct : 'Correct! ' + prompt + ' = ' + correct + '.', 'good');
   if (count < total) {
     const choosingWithButton = document.activeElement === target.element;
     nextRound();
@@ -283,7 +384,7 @@ function choose(target) {
   clearTargets();
   drawPlayer();
   byId('title').textContent = 'Bravo !';
-  byId('intro').textContent = 'You matched all ' + total + ' words. ' + (mistakes === 0 ? 'Every catch was correct!' : 'Extra guesses: ' + mistakes + '.');
+  byId('intro').textContent = 'You answered all ' + total + ' prompts. ' + (mistakes === 0 ? 'Every catch was correct!' : 'Extra guesses: ' + mistakes + '.');
   byId('start').textContent = 'Play again';
   overlay.hidden = false;
   byId('start').focus({preventScroll:true});
@@ -315,7 +416,7 @@ function updatePredator(step) {
     x = clamp(schoolX + tank.clientWidth * .5, 80, worldWidth - 80);
     y = clamp(schoolY + tank.clientHeight * .81, 55, worldHeight - 55);
     pointer = null;
-    showFeedback('The predator caught you! Keep going with this word.', 'bad');
+    showFeedback('The predator caught you! Keep going with this prompt.', 'bad');
     return;
   }
   if (chaseTime <= 0) {
@@ -409,12 +510,18 @@ byId('close-words').addEventListener('click', () => wordDialog.close());
 byId('play-custom').addEventListener('click', () => {
   const pairs = readCustomWords();
   if (!pairs) return;
+  customWords = pairs;
   activeWords = pairs;
+  activeContext = null;
+  customOption.hidden = customOption.disabled = false;
+  contextPicker.value = customMode;
   wordDialog.close();
   begin();
 });
 byId('use-builtin').addEventListener('click', () => {
   activeWords = builtInWords;
+  activeContext = null;
+  contextPicker.value = reviewMode;
   wordDialog.close();
   begin();
 });
@@ -431,12 +538,19 @@ byId('download-custom').addEventListener('click', () => {
   link.click();
   setTimeout(() => URL.revokeObjectURL(url), 30000);
 });
+let customWords = embeddedWords;
+contextPicker.addEventListener('change', () => {
+  activeContext = contexts.find(context => context.id === contextPicker.value) ?? null;
+  activeWords = contextPicker.value === customMode ? customWords : builtInWords;
+  showStart();
+});
+showStart();
 tank.tabIndex = -1;
 byId('start').addEventListener('click',begin);
 byId('reset').addEventListener('click',begin);
 window.addEventListener('keydown', event => {
   const key = event.key.toLowerCase();
-  if (!running || wordDialog.open || !controls.includes(key) || event.ctrlKey || event.altKey || event.metaKey) return;
+  if (!running || wordDialog.open || event.target === contextPicker || !controls.includes(key) || event.ctrlKey || event.altKey || event.metaKey) return;
   event.preventDefault();
   keys.add(key);
 });
