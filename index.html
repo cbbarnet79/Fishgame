@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Swim, match French words to English, and grow your fish.">
+<title>French Fish</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#061c2c;color:#eefafa;font-family:system-ui,sans-serif}main{max-width:1120px;margin:auto;padding:24px 24px 14px}header,.toolbar,footer{display:flex;align-items:center;justify-content:space-between;gap:12px}header{padding-bottom:19px;border-bottom:1px solid #254755}h1{margin:0;font-size:26px;letter-spacing:-.04em}.brand{display:flex;align-items:center;gap:12px}.mark{color:#072733;background:#6ef1d5;border-radius:14px;padding:7px 10px;font-size:22px}button{font:inherit;cursor:pointer}button:focus-visible{outline:3px solid #fff;outline-offset:4px}.reset{background:#123343;color:#d9f5f1;border:1px solid #335766;border-radius:9px;padding:8px 14px}.toolbar{margin:17px 0;background:#0d2b3e;border:1px solid #244957;border-radius:16px;padding:13px 20px}.caption{color:#a0c9d4;font-size:11px;text-transform:uppercase;letter-spacing:.14em;font-weight:750}.word{font-size:clamp(24px,5vw,42px);font-weight:820;letter-spacing:-.045em;color:#fafdfb}.progress{text-align:right;min-width:92px}.progress strong{display:block;color:#83f4d8;font-size:24px}.tank{height:clamp(365px,62vh,610px);position:relative;isolation:isolate;overflow:hidden;border:1px solid #417b88;border-radius:20px;touch-action:none;background:radial-gradient(ellipse at 42% -35%,#5eaeb1 0,transparent 62%),linear-gradient(#186577,#0b465f 50%,#072a44)}.tank:before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(112deg,transparent 0 11%,#a2f8ee0d 14%,transparent 20%);mask-image:linear-gradient(black,transparent 90%)}.bed{position:absolute;bottom:-40px;width:120%;height:94px;left:-10%;border-radius:50%;background:#0a3048;box-shadow:0 -18px 0 #0d3c52,0 -30px 0 #11465c;pointer-events:none}.weed{position:absolute;bottom:10px;width:17px;height:var(--h);border:5px solid #2b7979;border-top:0;border-bottom:0;border-radius:55% 70% 40% 20%;transform:rotate(var(--r));opacity:.56;pointer-events:none}.bubble{position:absolute;border:1px solid #a8f6f05b;border-radius:50%;pointer-events:none}.fish{--color:#f0a96f;position:absolute;z-index:2;left:0;top:0;display:grid;place-items:center;transform:translate(-50%,-50%);height:54px;width:clamp(105px,21%,158px);background:none;border:0;padding:0;color:#092535;font-size:clamp(12px,2.1vw,16px);font-weight:820;white-space:nowrap;filter:drop-shadow(0 4px 5px #06273955)}.fish:before,.fish:after{content:"";position:absolute;background:var(--color);z-index:-1}.fish:before{inset:0 4% 0 12%;border-radius:55% 48% 48% 55%;box-shadow:inset 0 -7px 0 #03283f22,inset 0 2px 0 #ffffff50}.fish:after{width:23%;height:70%;left:-4%;clip-path:polygon(0 0,100% 50%,0 100%,17% 50%)}.fish span{margin-left:5%}.fish:hover:before{outline:2px solid #fff9}.fish.miss{opacity:.35;pointer-events:none}.player{--color:#74f3d4;pointer-events:none;z-index:3;width:76px;height:46px}.player:before{inset:0 0 0 14%}.player:after{left:-3%}.player i{position:absolute;width:10px;height:10px;right:13%;top:27%;border:3px solid white;border-radius:50%;background:#112333}.player.left{scale:-1 1}.overlay{position:absolute;inset:0;display:grid;place-items:center;z-index:4;background:#05223378;padding:16px}.overlay[hidden]{display:none}.card{text-align:center;background:#082b3beF;border:1px solid #83eee554;border-radius:24px;padding:26px 26px 29px;width:min(100%,440px);box-shadow:0 16px 48px #041c36a0}.card h2{font-size:clamp(32px,7vw,58px);line-height:1;letter-spacing:-.055em;margin:0 0 12px}.card p{color:#c4e6e9;line-height:1.5;margin:0 auto 20px;max-width:31ch}.start{background:#79f2d6;border:0;border-radius:11px;padding:12px 24px;font-weight:800;color:#082c37}.feedback{color:#a7d3dd;font-size:14px;min-height:22px}.feedback[data-tone=good]{color:#8df7d6}.feedback[data-tone=bad]{color:#ffc69b}footer{margin-top:12px;color:#a7c5cf;font-size:12px;flex-wrap:wrap}footer p{margin:0}kbd{font:inherit;color:#e8fbfa;background:#17394a;border-radius:4px;padding:2px 5px}@media(max-width:560px){main{padding:13px}.toolbar{padding:10px 13px}.tank{height:clamp(375px,63vh,510px)}.card{padding:21px}.fish{height:45px}.player{height:40px}}
+.header-actions,.word-actions{display:flex;gap:8px;flex-wrap:wrap}.header-actions{justify-content:flex-end}.word{overflow-wrap:anywhere}.toolbar>div:first-child{min-width:0}.fish span{white-space:normal;overflow-wrap:anywhere;line-height:1.12;max-width:77%;margin-left:9%}dialog{width:min(560px,calc(100% - 32px));max-height:90vh;overflow:auto;border:1px solid #417b88;border-radius:18px;background:#0d2b3e;color:#eefafa;padding:22px}dialog::backdrop{background:#031522c9}dialog h2{margin:0 0 12px}dialog label{display:block;font-weight:750}dialog p{color:#c4e6e9;line-height:1.45}textarea{width:100%;min-height:148px;resize:vertical;background:#061c2c;color:#eefafa;border:1px solid #5b8a97;border-radius:9px;padding:10px;font:inherit}#word-error{color:#ffc69b}.word-actions .start{padding:8px 14px}@media(max-width:420px){.brand{gap:6px}h1{font-size:19px}.header-actions .reset{padding:7px 9px}.mark{font-size:16px}}
+.tank{container-type:inline-size}.lake button.fish{width:clamp(105px,21cqw,158px)}.lake{position:absolute;inset:0 auto auto 0;overflow:hidden;background:linear-gradient(#338d9d 0%,#176579 16%,#0b455e 49%,#092e48 84%,#072338 100%)}.lake:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(112deg,transparent 0 11%,#a2f8ee19 14%,transparent 20%);mask-image:linear-gradient(black,transparent 65%);pointer-events:none}.surface{position:absolute;inset:0 0 auto;height:17px;border-bottom:2px solid #acffefb0;background:#65bdc4;box-shadow:0 0 25px #8afee676;pointer-events:none}.lake .bed{bottom:-16px}.predator{--color:#b63353;width:146px;height:73px;z-index:3;pointer-events:none}.predator[hidden]{display:none}.predator:before{inset:0 0 0 14%}.predator i{position:absolute;width:12px;height:12px;right:15%;top:25%;border:3px solid #fff1dd;border-radius:50%;background:#380b1d}.predator i:after{content:"";position:absolute;top:20px;left:0;width:18px;height:9px;background:#fff1dd;clip-path:polygon(0 0,100% 0,77% 100%,52% 0,25% 100%)}.predator.left{scale:-1 1}.map{position:absolute;right:10px;bottom:10px;z-index:3;width:103px;height:72px;border:1px solid #76c3cc8c;border-radius:8px;background:#061c2cd9;pointer-events:none}.map[hidden]{display:none}.map span{position:absolute;width:6px;height:6px;border-radius:50%;transform:translate(-50%,-50%);background:#ffd396}.map .map-player{width:8px;height:8px;background:#74f3d4;z-index:1}.map .map-predator{background:#ff6a87}.map span[hidden]{display:none}.chase{position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:4;background:#381529;color:#ffd3db;border:1px solid #ff96a6;border-radius:9px;padding:6px 12px;font-weight:800;font-size:13px;white-space:nowrap;pointer-events:none}.overlay{z-index:5}.fish span{font-size:clamp(11px,1.75vw,16px)}.fish.long{height:62px}.map-legend{position:absolute;right:10px;bottom:85px;z-index:3;font-size:10px;color:#ecfffa;background:#082b3bdb;padding:2px 5px;border-radius:4px;pointer-events:none}
+</style>
+</head>
+<body><main>
+<header><div class="brand"><span class="mark" aria-hidden="true">◀</span><h1>French Fish</h1></div><div class="header-actions"><button class="reset" id="edit-words" type="button">Word list</button><button class="reset" id="reset" type="button">Restart</button></div></header>
+<section class="toolbar" aria-label="Current word and score"><div><div class="caption">Find the English translation</div><div class="word" id="word" lang="fr" aria-live="polite">—</div></div><div class="progress"><div class="caption">Correct</div><strong id="score">0 / 12</strong></div></section>
+<section class="tank" id="tank" aria-label="Playing area">
+<div class="lake" id="lake">
+<div class="surface"></div><div class="bed"></div><div id="scenery" aria-hidden="true"></div>
+<div class="fish player" id="player" aria-hidden="true"><i></i></div>
+<div class="fish predator" id="predator" aria-hidden="true" hidden><i></i></div>
+</div>
+<div class="map" id="map" aria-label="Lake map" hidden><span class="map-player" id="map-player"></span><span class="map-predator" id="map-predator" hidden></span></div>
+<div class="map-legend" id="map-legend" hidden>Lake map</div>
+<div class="chase" id="chase" role="status" hidden>Predator nearby! Keep swimming.</div>
+<div class="overlay" id="overlay"><div class="card"><h2 id="title">French Fish</h2><p id="intro">Swim into the fish with the English translation. Each correct catch makes your fish bigger. Explore the lake and dodge the red predator.</p><button class="start" id="start" type="button">Start swimming</button></div></div>
+</section>
+<footer><p class="feedback" id="feedback" role="status"></p><p><kbd>Arrow keys</kbd> / <kbd>WASD</kbd> or drag to swim · Click or tap a fish to choose</p></footer>
+</main>
+<dialog id="word-dialog" aria-labelledby="word-title">
+<h2 id="word-title">Custom vocabulary</h2>
+<label for="word-list">French–English pairs</label>
+<p id="word-help">Enter at least two pairs, one per line. Separate each French word or phrase from its English translation with <strong>|</strong> or a tab.</p>
+<textarea id="word-list" aria-describedby="word-help word-error" placeholder="bonjour | hello&#10;merci | thank you&#10;au revoir | goodbye" spellcheck="false"></textarea>
+<p id="word-error" role="status" hidden></p>
+<p>Each game uses up to 12 pairs. Download saves a copy with these words for your students.</p>
+<div class="word-actions">
+<button class="start" id="play-custom" type="button">Play custom list</button>
+<button class="reset" id="download-custom" type="button">Download custom game</button>
+<button class="reset" id="use-builtin" type="button">Play built-in words</button>
+<button class="reset" id="close-words" type="button">Close</button>
+</div>
+</dialog>
+<script type="application/json" id="embedded-words">null</script>
+<script>
+const builtInWords = [
+  ['le chat','cat'],['le chien','dog'],['le poisson','fish'],['le livre','book'],
+  ['la maison','house'],['la pomme','apple'],['le pain','bread'],['le lait','milk'],
+  ['la table','table'],['la chaise','chair'],['la porte','door'],['la fenêtre','window'],
+  ['la voiture','car'],['le vélo','bicycle'],['le train','train'],['le soleil','sun'],
+  ['la lune','moon'],['la fleur','flower'],['la plage','beach'],['la montagne','mountain'],
+  ['le jardin','garden'],['le fromage','cheese'],['la soupe','soup'],['le chapeau','hat']
+];
+const maxRounds = 12;
+const colors = ['#ffc179','#9cc8ff','#ff9bb4','#b3e7a4'];
+const byId = id => document.getElementById(id);
+const sourceDocument = document.documentElement.outerHTML;
+const embeddedWords = JSON.parse(byId('embedded-words').textContent);
+const wordDialog = byId('word-dialog'), wordList = byId('word-list'), wordError = byId('word-error');
+const listStorageKey = 'french-fish-word-list';
+let savedList = '';
+if (!embeddedWords) {
+  try { savedList = localStorage.getItem(listStorageKey) || ''; } catch {}
+}
+wordList.value = embeddedWords ? embeddedWords.map(pair => pair.join(' | ')).join('\n') : savedList;
+let activeWords = embeddedWords || builtInWords;
+let total = Math.min(maxRounds, activeWords.length);
+byId('score').textContent = '0 / ' + total;
+const tank = byId('tank'), player = byId('player'), overlay = byId('overlay');
+const lake = byId('lake'), predator = byId('predator'), map = byId('map');
+const worldWidth = 2240, worldHeight = 1440;
+lake.style.width = worldWidth + 'px';
+lake.style.height = worldHeight + 'px';
+const word = byId('word'), score = byId('score'), feedback = byId('feedback');
+const keys = new Set();
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const controls = ['arrowleft','arrowright','arrowup','arrowdown','a','d','w','s'];
+let deck = [], targets = [], count = 0, mistakes = 0, running = false;
+let x = 0, y = 0, facingLeft = false, roundStarted = 0, previousTime = 0;
+let cameraX = 0, cameraY = 0, schoolX = 0, schoolY = 0;
+let pointer = null, chaseIn = 17, chaseTime = 0, predatorX = 0, predatorY = 0;
+const shuffle = items => {
+  const copy = [...items];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+};
+const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+for (let i = 0; i < 58; i++) {
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble';
+  const size = 5 + (i * 7 % 18);
+  Object.assign(bubble.style, {width:size+'px',height:size+'px',left:(4+i*17%93)+'%',top:(9+i*19%78)+'%'});
+  byId('scenery').append(bubble);
+}
+for (let i = 0; i < 32; i++) {
+  const weed = document.createElement('div');
+  weed.className = 'weed';
+  weed.style.cssText = '--h:'+ (20+i*27%67)+'px;--r:'+ (i*13%55-27)+'deg;left:'+ (2+i*3.05)+'%';
+  byId('scenery').append(weed);
+}
+function place(element, px, py) {
+  element.style.left = px + 'px';
+  element.style.top = py + 'px';
+}
+function mapPoint(element, px, py) {
+  element.style.left = (px / worldWidth * 94 + 3) + '%';
+  element.style.top = (py / worldHeight * 90 + 5) + '%';
+}
+function drawPlayer() {
+  const width = 76 + count * 4;
+  const height = 43 + count * 2;
+  player.style.width = width + 'px';
+  player.style.height = height + 'px';
+  x = clamp(x, width/2, worldWidth - width/2);
+  y = clamp(y, height/2, worldHeight - height/2);
+  player.classList.toggle('left', facingLeft);
+  place(player, x, y);
+  cameraX = clamp(x - tank.clientWidth / 2, 0, worldWidth - tank.clientWidth);
+  cameraY = clamp(y - tank.clientHeight / 2, 0, worldHeight - tank.clientHeight);
+  lake.style.transform = 'translate(' + -cameraX + 'px,' + -cameraY + 'px)';
+  mapPoint(byId('map-player'), x, y);
+}
+function showFeedback(message, tone = '') {
+  feedback.textContent = message;
+  feedback.dataset.tone = tone;
+}
+function clearTargets() {
+  for (const target of targets) {
+    target.element.remove();
+    target.dot.remove();
+  }
+  targets = [];
+}
+function nextRound() {
+  clearTargets();
+  const [french, english] = deck[count];
+  word.textContent = french;
+  const distractors = shuffle(activeWords.filter(entry => entry[1] !== english)).slice(0,3).map(entry => entry[1]);
+  targets = shuffle([english, ...distractors]).map((answer, index) => {
+    const element = document.createElement('button');
+    element.type = 'button';
+    element.className = answer.length > 22 ? 'fish long' : 'fish';
+    element.style.setProperty('--color', colors[index]);
+    const label = document.createElement('span');
+    label.textContent = answer;
+    element.append(label);
+    const dot = document.createElement('span');
+    map.append(dot);
+    const target = {element, dot, answer, index, missed:false, x:0, y:0};
+    element.addEventListener('click', () => choose(target));
+    lake.append(element);
+    return target;
+  });
+  schoolX = cameraX;
+  schoolY = cameraY;
+  roundStarted = performance.now();
+  drawPlayer();
+  drawTargets(0);
+}
+function drawTargets(elapsed) {
+  const wide = tank.clientWidth > 740;
+  for (const target of targets) {
+    const {index,element} = target;
+    const baseX = wide ? [.16,.38,.62,.84][index] : [.27,.73,.27,.73][index];
+    const baseY = wide ? [.23,.31,.21,.29][index] : [.16,.16,.36,.36][index];
+    const drift = reducedMotion ? 0 : Math.sin(elapsed / 1050 + index * 1.8) * Math.min(22,tank.clientWidth * .03);
+    const bob = reducedMotion ? 0 : Math.cos(elapsed / 780 + index) * 12;
+    target.x = schoolX + tank.clientWidth * baseX + drift;
+    target.y = schoolY + tank.clientHeight * baseY + bob;
+    place(element, target.x, target.y);
+    mapPoint(target.dot, target.x, target.y);
+  }
+}
+function begin() {
+  total = Math.min(maxRounds, activeWords.length);
+  deck = shuffle(activeWords).slice(0,total);
+  count = 0;
+  mistakes = 0;
+  keys.clear();
+  score.textContent = '0 / ' + total;
+  showFeedback('');
+  overlay.hidden = true;
+  map.hidden = false;
+  byId('map-legend').hidden = false;
+  x = worldWidth * .50;
+  y = worldHeight * .43;
+  facingLeft = false;
+  pointer = null;
+  endChase();
+  chaseIn = 17;
+  running = true;
+  nextRound();
+  tank.focus({preventScroll:true});
+}
+function choose(target) {
+  if (!running || target.missed || !targets.includes(target)) return;
+  const [french, english] = deck[count];
+  if (target.answer !== english) {
+    target.missed = true;
+    target.dot.hidden = true;
+    target.element.disabled = true;
+    target.element.classList.add('miss');
+    mistakes++;
+    showFeedback('Try again. “' + target.answer + '” is a different word.', 'bad');
+    return;
+  }
+  count++;
+  score.textContent = count + ' / ' + total;
+  showFeedback('Correct! ' + french + ' = ' + english + '.', 'good');
+  if (count < total) {
+    const choosingWithButton = document.activeElement === target.element;
+    nextRound();
+    if (choosingWithButton) targets[0].element.focus({preventScroll:true});
+    return;
+  }
+  running = false;
+  pointer = null;
+  endChase();
+  keys.clear();
+  clearTargets();
+  drawPlayer();
+  byId('title').textContent = 'Bravo !';
+  byId('intro').textContent = 'You matched all ' + total + ' words. ' + (mistakes === 0 ? 'Every catch was correct!' : 'Extra guesses: ' + mistakes + '.');
+  byId('start').textContent = 'Play again';
+  overlay.hidden = false;
+  byId('start').focus({preventScroll:true});
+}
+function endChase() {
+  chaseTime = 0;
+  predator.hidden = true;
+  byId('chase').hidden = true;
+  byId('map-predator').hidden = true;
+}
+function updatePredator(step) {
+  if (chaseTime <= 0) {
+    chaseIn -= step;
+    if (chaseIn > 0) return;
+    chaseTime = 6;
+    chaseIn = 17 + Math.random() * 8;
+    const fromLeft = x > worldWidth / 2;
+    predatorX = clamp(x + (fromLeft ? -1 : 1) * (tank.clientWidth / 2 + 105), 75, worldWidth - 75);
+    predatorY = clamp(y - 110, 45, worldHeight - 45);
+    predator.hidden = false;
+    byId('chase').hidden = false;
+    byId('map-predator').hidden = false;
+  }
+  chaseTime -= step;
+  const dx = x - predatorX, dy = y - predatorY;
+  const gap = Math.hypot(dx, dy);
+  if (gap < 63) {
+    endChase();
+    x = clamp(schoolX + tank.clientWidth * .5, 80, worldWidth - 80);
+    y = clamp(schoolY + tank.clientHeight * .81, 55, worldHeight - 55);
+    pointer = null;
+    showFeedback('The predator caught you! Keep going with this word.', 'bad');
+    return;
+  }
+  if (chaseTime <= 0) {
+    endChase();
+    return;
+  }
+  predatorX += dx / gap * 225 * step;
+  predatorY += dy / gap * 225 * step;
+  predator.classList.toggle('left', dx < 0);
+  place(predator, predatorX, predatorY);
+  mapPoint(byId('map-predator'), predatorX, predatorY);
+}
+function frame(now) {
+  const step = Math.min((now - previousTime) / 1000, .04);
+  previousTime = now;
+  if (running && !wordDialog.open && !document.hidden) {
+    drawTargets(now - roundStarted);
+    let dx = Number(keys.has('arrowright') || keys.has('d')) - Number(keys.has('arrowleft') || keys.has('a'));
+    let dy = Number(keys.has('arrowdown') || keys.has('s')) - Number(keys.has('arrowup') || keys.has('w'));
+    if (pointer && !dx && !dy) {
+      const bounds = tank.getBoundingClientRect();
+      const aimX = pointer.x - bounds.left + cameraX - x;
+      const aimY = pointer.y - bounds.top + cameraY - y;
+      if (Math.hypot(aimX, aimY) > 12) {
+        dx = aimX;
+        dy = aimY;
+      }
+    }
+    if (dx || dy) {
+      const distance = 280 * step / Math.hypot(dx,dy);
+      x += dx * distance;
+      y += dy * distance;
+      if (dx) facingLeft = dx < 0;
+    }
+    drawPlayer();
+    if ((dx || dy) && now - roundStarted > 300) {
+      const mouthX = x + (facingLeft ? -1 : 1) * player.offsetWidth * .36;
+      const target = targets.find(fish => !fish.missed &&
+        Math.abs(mouthX - fish.x) < fish.element.offsetWidth * .38 &&
+        Math.abs(y - fish.y) < fish.element.offsetHeight * .48);
+      if (target) choose(target);
+    }
+    if (running) updatePredator(step);
+  }
+  requestAnimationFrame(frame);
+}
+function readCustomWords() {
+  const frenchWords = new Set(), englishWords = new Set();
+  const pairs = [];
+  const lines = wordList.value.split(/\r?\n/);
+  function invalid(message) {
+    wordError.textContent = message;
+    wordError.hidden = false;
+    wordList.focus();
+    return null;
+  }
+  for (const [index, line] of lines.entries()) {
+    if (!line.trim()) continue;
+    const parts = line.split(line.includes('|') ? '|' : '\t').map(part => part.trim().normalize());
+    const [french, english] = parts;
+    if (parts.length !== 2 || !french || !english) {
+      return invalid('Line ' + (index + 1) + ' needs one French entry and one English entry.');
+    }
+    if (english.length > 48 || french.length > 100) {
+      return invalid('Line ' + (index + 1) + ' is too long. Use up to 100 characters in French and 48 in English.');
+    }
+    const frenchKey = french.toLocaleLowerCase('fr').replace(/\s+/g, ' ');
+    const englishKey = english.toLocaleLowerCase('en').replace(/\s+/g, ' ');
+    if (frenchWords.has(frenchKey) || englishWords.has(englishKey)) {
+      return invalid('Line ' + (index + 1) + ' repeats a French entry or an English translation.');
+    }
+    frenchWords.add(frenchKey);
+    englishWords.add(englishKey);
+    pairs.push(parts);
+  }
+  if (pairs.length < 2) return invalid('Enter at least two French–English pairs.');
+  wordError.hidden = true;
+  if (!embeddedWords) {
+    try { localStorage.setItem(listStorageKey, wordList.value); } catch {}
+  }
+  return pairs;
+}
+byId('edit-words').addEventListener('click', () => {
+  keys.clear();
+  pointer = null;
+  wordError.hidden = true;
+  wordDialog.showModal();
+  wordList.focus();
+});
+byId('close-words').addEventListener('click', () => wordDialog.close());
+byId('play-custom').addEventListener('click', () => {
+  const pairs = readCustomWords();
+  if (!pairs) return;
+  activeWords = pairs;
+  wordDialog.close();
+  begin();
+});
+byId('use-builtin').addEventListener('click', () => {
+  activeWords = builtInWords;
+  wordDialog.close();
+  begin();
+});
+byId('download-custom').addEventListener('click', () => {
+  const pairs = readCustomWords();
+  if (!pairs) return;
+  const copy = new DOMParser().parseFromString(sourceDocument, 'text/html');
+  copy.getElementById('embedded-words').textContent = JSON.stringify(pairs).replace(/</g, '\\u003c');
+  const file = new Blob(['<!doctype html>\n', copy.documentElement.outerHTML], {type:'text/html;charset=utf-8'});
+  const url = URL.createObjectURL(file);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'French_Fish_Custom.html';
+  link.click();
+  setTimeout(() => URL.revokeObjectURL(url), 30000);
+});
+tank.tabIndex = -1;
+byId('start').addEventListener('click',begin);
+byId('reset').addEventListener('click',begin);
+window.addEventListener('keydown', event => {
+  const key = event.key.toLowerCase();
+  if (!running || wordDialog.open || !controls.includes(key) || event.ctrlKey || event.altKey || event.metaKey) return;
+  event.preventDefault();
+  keys.add(key);
+});
+window.addEventListener('keyup', event => keys.delete(event.key.toLowerCase()));
+tank.addEventListener('pointerdown', event => {
+  if (!running || !event.isPrimary || event.button !== 0 || event.target.closest('button')) return;
+  pointer = {x:event.clientX, y:event.clientY};
+  tank.setPointerCapture(event.pointerId);
+});
+tank.addEventListener('pointermove', event => {
+  if (pointer && event.isPrimary) pointer = {x:event.clientX, y:event.clientY};
+});
+for (const eventName of ['pointerup', 'pointercancel', 'lostpointercapture']) {
+  tank.addEventListener(eventName, event => { if (event.isPrimary) pointer = null; });
+}
+window.addEventListener('blur', () => {
+  keys.clear();
+  pointer = null;
+});
+x = worldWidth * .5;
+y = worldHeight * .43;
+drawPlayer();
+requestAnimationFrame(frame);
+</script></body></html>
