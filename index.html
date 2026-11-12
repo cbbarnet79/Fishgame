@@ -15,8 +15,8 @@
 </head>
 <body><main>
 <header><div class="brand"><span class="mark" aria-hidden="true">◀</span><h1>French Fish</h1></div><div class="header-actions"><button class="reset" id="edit-words" type="button">Word list</button><button class="reset" id="reset" type="button">Restart</button></div></header>
-<div class="context-picker"><label for="context">Choose a context</label><select id="context"></select></div>
-<section class="toolbar" aria-label="Current prompt and score"><div><div class="caption" id="prompt-label">Find the French answer</div><div class="word" id="word" lang="fr" aria-live="polite">—</div></div><div class="progress"><div class="caption">Correct</div><strong id="score">0 / 12</strong></div></section>
+<div class="context-picker" lang="fr"><label for="context">Choisis une situation</label><select id="context"></select></div>
+<section class="toolbar" lang="fr" aria-label="Consigne et score"><div><div class="caption" id="prompt-label">Trouve la bonne réponse</div><div class="word" id="word" lang="fr" aria-live="polite">—</div></div><div class="progress"><div class="caption">Bonnes réponses</div><strong id="score">0 / 12</strong></div></section>
 <section class="tank" id="tank" aria-label="Playing area">
 <div class="lake" id="lake">
 <div class="surface"></div><div class="bed"></div><div id="scenery" aria-hidden="true"></div>
@@ -26,7 +26,7 @@
 <div class="map" id="map" aria-label="Lake map" hidden><span class="map-player" id="map-player"></span><span class="map-predator" id="map-predator" hidden></span></div>
 <div class="map-legend" id="map-legend" hidden>Lake map</div>
 <div class="chase" id="chase" role="status" hidden>Predator nearby! Keep swimming.</div>
-<div class="overlay" id="overlay"><div class="card"><h2 id="title">French Fish</h2><p id="intro">Choose a context and swim into the fish that fits each situation. Each correct catch makes your fish bigger.</p><p>Answer fish can be anywhere in the lake. Use the arrow keys to swim up to the surface, down to the lakebed, or left and right. Check the lake map to find them.</p><p>If the red predator appears, keep swimming. Evade it for 6 seconds and it will go away.</p><button class="start" id="start" type="button">Start swimming</button></div></div>
+<div class="overlay" id="overlay"><div class="card"><h2 id="title">French Fish</h2><p id="intro">Choisis une situation and swim into the fish that fits each situation. Each correct catch makes your fish bigger.</p><p>Answer fish can be anywhere in the lake. Use the arrow keys to swim up to the surface, down to the lakebed, or left and right. Check the lake map to find them.</p><p>If the red predator appears, keep swimming. Evade it for 6 seconds and it will go away.</p><button class="start" id="start" type="button">Start swimming</button></div></div>
 </section>
 <footer><p class="feedback" id="feedback" role="status"></p><p><kbd>Arrow keys</kbd> / <kbd>WASD</kbd> or drag to swim · Click or tap a fish to choose</p></footer>
 </main>
@@ -86,62 +86,62 @@ const builtInWords = [
 ];
 const contexts = [
   {
-    id: 'registration', title: 'Register for a French class', challenges: [
-      ['Fill out the registration form. Which field asks for your first name?', 'prénom', 'nom de famille', 'ville', 'pays'],
-      ['Now find the field for your last name.', 'nom de famille', 'prénom', 'pays', 'adresse e-mail'],
-      ['The school will send your confirmation by email. Which field should you fill in?', 'adresse e-mail', 'numéro de téléphone', 'ville', 'pays'],
-      ['The school can also call you. Which field asks for your phone number?', 'numéro de téléphone', 'adresse e-mail', 'prénom', 'ville']
+    id: 'registration', title: 'S’inscrire à un cours de français', challenges: [
+      ['Tu t’inscris à un cours. Où écris-tu ton prénom ?', 'prénom', 'nom de famille', 'ville', 'pays'],
+      ['Où écris-tu ton nom de famille ?', 'nom de famille', 'prénom', 'pays', 'adresse e-mail'],
+      ['L’école veut t’envoyer un e-mail. Quelle information donnes-tu ?', 'adresse e-mail', 'numéro de téléphone', 'ville', 'pays'],
+      ['L’école veut te téléphoner. Quelle information donnes-tu ?', 'numéro de téléphone', 'adresse e-mail', 'prénom', 'ville']
     ]
   },
   {
-    id: 'reception', title: 'Greet someone at an evening event', challenges: [
-      ['It’s 7 p.m. and you’re meeting the host for the first time. How do you greet them?', 'Bonsoir !', 'Au revoir !', 'Bonne soirée !', 'À demain !'],
-      ['A guest introduces herself. How do you say that you’re pleased to meet her?', 'Enchanté(e) !', 'À bientôt !', 'À demain !', 'Bonne soirée !'],
-      ['You’re leaving. Wish the host a good evening.', 'Bonne soirée !', 'Bonne journée !', 'Bonjour !', 'Enchanté(e) !']
+    id: 'reception', title: 'Dire bonsoir à une fête', challenges: [
+      ['Il est 19 h. Tu arrives à la fête. Qu’est-ce que tu dis ?', 'Bonsoir !', 'Au revoir !', 'Bonne soirée !', 'À demain !'],
+      ['Une personne se présente. Tu es content de la rencontrer. Qu’est-ce que tu dis ?', 'Enchanté(e) !', 'À bientôt !', 'À demain !', 'Bonne soirée !'],
+      ['Tu pars. Souhaite une bonne soirée.', 'Bonne soirée !', 'Bonne journée !', 'Bonjour !', 'Enchanté(e) !']
     ]
   },
   {
-    id: 'badge', title: 'Make a name badge for a mixer', challenges: [
-      ['Your name is Camille. Choose the introduction that belongs on your badge.', 'Je m’appelle Camille.', 'Je m’appelle Lina.', 'Je m’appelle Alex.', 'Je m’appelle Sam.'],
-      ['Your badge should say you’re from Canada. Which line fits?', 'Je viens du Canada.', 'Je viens de France.', 'Je viens de Belgique.', 'Je viens de Suisse.'],
-      ['Choose the line that says you speak French and English.', 'Je parle français et anglais.', 'Je parle français et espagnol.', 'Je parle anglais et allemand.', 'Je parle espagnol et allemand.']
+    id: 'badge', title: 'Préparer ton badge', challenges: [
+      ['Tu t’appelles Camille. Quelle phrase va sur ton badge ?', 'Je m’appelle Camille.', 'Je m’appelle Lina.', 'Je m’appelle Alex.', 'Je m’appelle Sam.'],
+      ['Tu viens du Canada. Quelle phrase va sur ton badge ?', 'Je viens du Canada.', 'Je viens de France.', 'Je viens de Belgique.', 'Je viens de Suisse.'],
+      ['Tu parles deux langues : le français et l’anglais. Choisis la bonne phrase.', 'Je parle français et anglais.', 'Je parle français et espagnol.', 'Je parle anglais et allemand.', 'Je parle espagnol et allemand.']
     ]
   },
   {
-    id: 'exchange', title: 'Find a language exchange partner', challenges: [
-      ['You want to practice French. Find someone who says they speak French.', 'Je parle français.', 'Je parle espagnol.', 'Je parle allemand.', 'J’apprends le français.'],
-      ['You can help your partner with English. Find someone who says they’re learning it.', 'J’apprends l’anglais.', 'J’apprends l’espagnol.', 'J’apprends le français.', 'Je parle un peu allemand.'],
-      ['Tell your partner you speak a little French.', 'Je parle un peu français.', 'Je parle un peu anglais.', 'Je parle espagnol.', 'J’apprends l’anglais.']
+    id: 'exchange', title: 'Trouver un partenaire de langue', challenges: [
+      ['Tu veux pratiquer le français. Trouve une personne qui parle français.', 'Je parle français.', 'Je parle espagnol.', 'Je parle allemand.', 'J’apprends le français.'],
+      ['Tu peux aider une personne en anglais. Trouve une personne qui apprend l’anglais.', 'J’apprends l’anglais.', 'J’apprends l’espagnol.', 'J’apprends le français.', 'Je parle un peu allemand.'],
+      ['Dis à ton partenaire que tu parles un peu français.', 'Je parle un peu français.', 'Je parle un peu anglais.', 'Je parle espagnol.', 'J’apprends l’anglais.']
     ]
   },
   {
-    id: 'guests', title: 'Match guests to their name badges', challenges: [
-      ['Lina says, « Je suis médecin. » Choose the job title for her badge.', 'médecin', 'professeure', 'étudiante', 'infirmière'],
-      ['Alex says, « Je suis professeur. » Choose the job title for his badge.', 'professeur', 'médecin', 'étudiant', 'infirmier'],
-      ['Sam says, « Je suis étudiant. » Choose the description for his badge.', 'étudiant', 'professeur', 'médecin', 'infirmier']
+    id: 'guests', title: 'Trouver le badge de chaque invité', challenges: [
+      ['Lina dit : « Je suis médecin. » Choisis son badge.', 'médecin', 'professeure', 'étudiante', 'infirmière'],
+      ['Alex dit : « Je suis professeur. » Choisis son badge.', 'professeur', 'médecin', 'étudiant', 'infirmier'],
+      ['Sam dit : « Je suis étudiant. » Choisis son badge.', 'étudiant', 'professeur', 'médecin', 'infirmier']
     ]
   },
   {
-    id: 'phone', title: 'Save a classmate’s phone number', challenges: [
-      ['A classmate gives you this number: « zéro six, douze, vingt-trois, trente, vingt ». Catch the first group.', '06', '12', '23', '30'],
-      ['You’ve entered 06. Your classmate says « douze » next. Catch that group.', '12', '02', '20', '23'],
-      ['You’ve entered 06 12. Catch « vingt-trois ».', '23', '30', '32', '20'],
-      ['You’ve entered 06 12 23. Catch « trente ».', '30', '03', '13', '23'],
-      ['Finish the number. Catch « vingt ».', '20', '02', '12', '30']
+    id: 'phone', title: 'Noter un numéro de téléphone', challenges: [
+      ['Ton camarade te donne son numéro : « Zéro six, douze, vingt-trois, trente, vingt. » Trouve le premier groupe.', '06', '12', '23', '30'],
+      ['Tu as noté 06. Ton camarade dit « douze ». Trouve le bon nombre.', '12', '02', '20', '23'],
+      ['Tu as noté 06 12. Trouve « vingt-trois ».', '23', '30', '32', '20'],
+      ['Tu as noté 06 12 23. Trouve « trente ».', '30', '03', '13', '23'],
+      ['Pour finir, trouve « vingt ».', '20', '02', '12', '30']
     ]
   },
   {
-    id: 'event', title: 'Find the right event', challenges: [
-      ['You’re free on Saturday evening. Which event listing fits your schedule?', 'samedi soir', 'samedi matin', 'dimanche soir', 'samedi après-midi'],
-      ['You can arrive at 7 p.m. Find the listing with that start time.', 'à 19 heures', 'à 18 heures', 'à 9 heures', 'à 17 heures'],
-      ['Your friend can only go on Sunday afternoon. Find a listing that works for them.', 'dimanche après-midi', 'dimanche matin', 'samedi après-midi', 'dimanche soir']
+    id: 'event', title: 'Choisir une sortie', challenges: [
+      ['Tu es libre samedi soir. Choisis une sortie.', 'samedi soir', 'samedi matin', 'dimanche soir', 'samedi après-midi'],
+      ['Tu peux arriver à 19 h. Choisis la bonne heure.', 'à 19 heures', 'à 18 heures', 'à 9 heures', 'à 17 heures'],
+      ['Ton ami est libre seulement dimanche après-midi. Choisis une sortie pour lui.', 'dimanche après-midi', 'dimanche matin', 'samedi après-midi', 'dimanche soir']
     ]
   },
   {
-    id: 'clarification', title: 'Ask someone to repeat their name', challenges: [
-      ['You missed the person’s name. Which question directly asks them to repeat it?', 'Vous pouvez répéter ?', 'D’où venez-vous ?', 'À quelle heure ?', 'Quel est votre métier ?'],
-      ['They repeat it, but too quickly. Ask them to speak more slowly.', 'Plus lentement, s’il vous plaît.', 'Comment ça s’écrit ?', 'Merci !', 'Je m’appelle Camille.'],
-      ['You want to write the name down. Ask how it’s spelled.', 'Comment ça s’écrit ?', 'Comment allez-vous ?', 'D’où venez-vous ?', 'Quel est votre métier ?']
+    id: 'clarification', title: 'Demander de répéter un prénom', challenges: [
+      ['Tu n’as pas compris le prénom. Demande à la personne de répéter.', 'Vous pouvez répéter ?', 'D’où venez-vous ?', 'À quelle heure ?', 'Quel est votre métier ?'],
+      ['La personne parle trop vite. Demande-lui de parler plus lentement.', 'Plus lentement, s’il vous plaît.', 'Comment ça s’écrit ?', 'Merci !', 'Je m’appelle Camille.'],
+      ['Tu veux écrire le prénom. Demande comment il s’écrit.', 'Comment ça s’écrit ?', 'Comment allez-vous ?', 'D’où venez-vous ?', 'Quel est votre métier ?']
     ]
   }
 ];
@@ -159,7 +159,7 @@ if (!embeddedWords) {
 wordList.value = embeddedWords ? embeddedWords.map(pair => pair.join(' | ')).join('\n') : savedList;
 const contextPicker = byId('context');
 const reviewMode = 'review', customMode = 'custom';
-for (const {id, title} of [...contexts, {id:reviewMode, title:'Vocabulary review (French to English)'}, {id:customMode, title:'Custom vocabulary'}]) {
+for (const {id, title} of [...contexts, {id:reviewMode, title:'Réviser les mots (français → anglais)'}, {id:customMode, title:'Mes mots'}]) {
   contextPicker.add(new Option(title, id));
 }
 let activeWords = embeddedWords || builtInWords;
@@ -307,9 +307,8 @@ function playCatchSound() {
   tone.stop(start + .21);
 }
 function updatePromptStyle() {
-  byId('prompt-label').textContent = activeContext?.title ?? 'Find the English translation';
+  byId('prompt-label').textContent = activeContext?.title ?? 'Trouve la traduction en anglais';
   word.classList.toggle('context-prompt', Boolean(activeContext));
-  word.lang = activeContext ? 'en' : 'fr';
 }
 function showStart() {
   running = false;
