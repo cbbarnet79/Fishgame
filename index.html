@@ -9,6 +9,7 @@
 *{box-sizing:border-box}body{margin:0;background:#061c2c;color:#eefafa;font-family:system-ui,sans-serif}main{max-width:1120px;margin:auto;padding:24px 24px 14px}header,.toolbar,footer{display:flex;align-items:center;justify-content:space-between;gap:12px}header{padding-bottom:19px;border-bottom:1px solid #254755}h1{margin:0;font-size:26px;letter-spacing:-.04em}.brand{display:flex;align-items:center;gap:12px}.mark{color:#072733;background:#6ef1d5;border-radius:14px;padding:7px 10px;font-size:22px}button{font:inherit;cursor:pointer}button:focus-visible{outline:3px solid #fff;outline-offset:4px}.reset{background:#123343;color:#d9f5f1;border:1px solid #335766;border-radius:9px;padding:8px 14px}.toolbar{margin:17px 0;background:#0d2b3e;border:1px solid #244957;border-radius:16px;padding:13px 20px}.caption{color:#a0c9d4;font-size:11px;text-transform:uppercase;letter-spacing:.14em;font-weight:750}.word{font-size:clamp(24px,5vw,42px);font-weight:820;letter-spacing:-.045em;color:#fafdfb}.progress{text-align:right;min-width:92px}.progress strong{display:block;color:#83f4d8;font-size:24px}.tank{height:clamp(365px,62vh,610px);position:relative;isolation:isolate;overflow:hidden;border:1px solid #417b88;border-radius:20px;touch-action:none;background:radial-gradient(ellipse at 42% -35%,#5eaeb1 0,transparent 62%),linear-gradient(#186577,#0b465f 50%,#072a44)}.tank:before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(112deg,transparent 0 11%,#a2f8ee0d 14%,transparent 20%);mask-image:linear-gradient(black,transparent 90%)}.bed{position:absolute;bottom:-40px;width:120%;height:94px;left:-10%;border-radius:50%;background:#0a3048;box-shadow:0 -18px 0 #0d3c52,0 -30px 0 #11465c;pointer-events:none}.weed{position:absolute;bottom:10px;width:17px;height:var(--h);border:5px solid #2b7979;border-top:0;border-bottom:0;border-radius:55% 70% 40% 20%;transform:rotate(var(--r));opacity:.56;pointer-events:none}.bubble{position:absolute;border:1px solid #a8f6f05b;border-radius:50%;pointer-events:none}.fish{--color:#f0a96f;position:absolute;z-index:2;left:0;top:0;display:grid;place-items:center;transform:translate(-50%,-50%);height:54px;width:clamp(105px,21%,158px);background:none;border:0;padding:0;color:#092535;font-size:clamp(12px,2.1vw,16px);font-weight:820;white-space:nowrap;filter:drop-shadow(0 4px 5px #06273955)}.fish:before,.fish:after{content:"";position:absolute;background:var(--color);z-index:-1}.fish:before{inset:0 4% 0 12%;border-radius:55% 48% 48% 55%;box-shadow:inset 0 -7px 0 #03283f22,inset 0 2px 0 #ffffff50}.fish:after{width:23%;height:70%;left:-4%;clip-path:polygon(0 0,100% 50%,0 100%,17% 50%)}.fish span{margin-left:5%}.fish:hover:before{outline:2px solid #fff9}.fish.miss{opacity:.35;pointer-events:none}.player{--color:#74f3d4;pointer-events:none;z-index:3;width:76px;height:46px}.player:before{inset:0 0 0 14%}.player:after{left:-3%}.player i{position:absolute;width:10px;height:10px;right:13%;top:27%;border:3px solid white;border-radius:50%;background:#112333}.player.left{scale:-1 1}.overlay{position:absolute;inset:0;display:grid;place-items:center;z-index:4;background:#05223378;padding:16px}.overlay[hidden]{display:none}.card{text-align:center;background:#082b3beF;border:1px solid #83eee554;border-radius:24px;padding:26px 26px 29px;width:min(100%,440px);box-shadow:0 16px 48px #041c36a0}.card h2{font-size:clamp(32px,7vw,58px);line-height:1;letter-spacing:-.055em;margin:0 0 12px}.card p{color:#c4e6e9;line-height:1.5;margin:0 auto 20px;max-width:31ch}.start{background:#79f2d6;border:0;border-radius:11px;padding:12px 24px;font-weight:800;color:#082c37}.feedback{color:#a7d3dd;font-size:14px;min-height:22px}.feedback[data-tone=good]{color:#8df7d6}.feedback[data-tone=bad]{color:#ffc69b}footer{margin-top:12px;color:#a7c5cf;font-size:12px;flex-wrap:wrap}footer p{margin:0}kbd{font:inherit;color:#e8fbfa;background:#17394a;border-radius:4px;padding:2px 5px}@media(max-width:560px){main{padding:13px}.toolbar{padding:10px 13px}.tank{height:clamp(375px,63vh,510px)}.card{padding:21px}.fish{height:45px}.player{height:40px}}
 .header-actions,.word-actions{display:flex;gap:8px;flex-wrap:wrap}.header-actions{justify-content:flex-end}.word{overflow-wrap:anywhere}.toolbar>div:first-child{min-width:0}.fish span{white-space:normal;overflow-wrap:anywhere;line-height:1.12;max-width:77%;margin-left:9%}dialog{width:min(560px,calc(100% - 32px));max-height:90vh;overflow:auto;border:1px solid #417b88;border-radius:18px;background:#0d2b3e;color:#eefafa;padding:22px}dialog::backdrop{background:#031522c9}dialog h2{margin:0 0 12px}dialog label{display:block;font-weight:750}dialog p{color:#c4e6e9;line-height:1.45}textarea{width:100%;min-height:148px;resize:vertical;background:#061c2c;color:#eefafa;border:1px solid #5b8a97;border-radius:9px;padding:10px;font:inherit}#word-error{color:#ffc69b}.word-actions .start{padding:8px 14px}@media(max-width:420px){.brand{gap:6px}h1{font-size:19px}.header-actions .reset{padding:7px 9px}.mark{font-size:16px}}
 .tank{container-type:inline-size}.lake button.fish{width:clamp(105px,21cqw,158px)}.lake{position:absolute;inset:0 auto auto 0;overflow:hidden;background:linear-gradient(#338d9d 0%,#176579 16%,#0b455e 49%,#092e48 84%,#072338 100%)}.lake:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(112deg,transparent 0 11%,#a2f8ee19 14%,transparent 20%);mask-image:linear-gradient(black,transparent 65%);pointer-events:none}.surface{position:absolute;inset:0 0 auto;height:17px;border-bottom:2px solid #acffefb0;background:#65bdc4;box-shadow:0 0 25px #8afee676;pointer-events:none}.lake .bed{bottom:-16px}.predator{--color:#b63353;width:146px;height:73px;z-index:3;pointer-events:none}.predator[hidden]{display:none}.predator:before{inset:0 0 0 14%}.predator i{position:absolute;width:12px;height:12px;right:15%;top:25%;border:3px solid #fff1dd;border-radius:50%;background:#380b1d}.predator i:after{content:"";position:absolute;top:20px;left:0;width:18px;height:9px;background:#fff1dd;clip-path:polygon(0 0,100% 0,77% 100%,52% 0,25% 100%)}.predator.left{scale:-1 1}.map{position:absolute;right:10px;bottom:10px;z-index:3;width:103px;height:72px;border:1px solid #76c3cc8c;border-radius:8px;background:#061c2cd9;pointer-events:none}.map[hidden]{display:none}.map span{position:absolute;width:6px;height:6px;border-radius:50%;transform:translate(-50%,-50%);background:#ffd396}.map .map-player{width:8px;height:8px;background:#74f3d4;z-index:1}.map .map-predator{background:#ff6a87}.map span[hidden]{display:none}.chase{position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:4;background:#381529;color:#ffd3db;border:1px solid #ff96a6;border-radius:9px;padding:6px 12px;font-weight:800;font-size:13px;white-space:nowrap;pointer-events:none}.overlay{z-index:5}.fish span{font-size:clamp(11px,1.75vw,16px)}.fish.long{height:62px}.map-legend{position:absolute;right:10px;bottom:85px;z-index:3;font-size:10px;color:#ecfffa;background:#082b3bdb;padding:2px 5px;border-radius:4px;pointer-events:none}
+.card p{margin-bottom:12px}.overlay{overflow:auto}
 </style>
 </head>
 <body><main>
@@ -23,7 +24,7 @@
 <div class="map" id="map" aria-label="Lake map" hidden><span class="map-player" id="map-player"></span><span class="map-predator" id="map-predator" hidden></span></div>
 <div class="map-legend" id="map-legend" hidden>Lake map</div>
 <div class="chase" id="chase" role="status" hidden>Predator nearby! Keep swimming.</div>
-<div class="overlay" id="overlay"><div class="card"><h2 id="title">French Fish</h2><p id="intro">Swim into the fish with the English translation. Each correct catch makes your fish bigger. Explore the lake and dodge the red predator.</p><button class="start" id="start" type="button">Start swimming</button></div></div>
+<div class="overlay" id="overlay"><div class="card"><h2 id="title">French Fish</h2><p id="intro">Swim into the fish with the English translation. Each correct catch makes your fish bigger.</p><p>Answer fish can be anywhere in the lake. Use the arrow keys to swim up to the surface, down to the lakebed, or left and right. Check the lake map to find them.</p><p>If the red predator appears, keep swimming. Evade it for 6 seconds and it will go away.</p><button class="start" id="start" type="button">Start swimming</button></div></div>
 </section>
 <footer><p class="feedback" id="feedback" role="status"></p><p><kbd>Arrow keys</kbd> / <kbd>WASD</kbd> or drag to swim · Click or tap a fish to choose</p></footer>
 </main>
@@ -174,7 +175,35 @@ function drawTargets(elapsed) {
     mapPoint(target.dot, target.x, target.y);
   }
 }
+let catchAudio;
+function enableCatchSound() {
+  try {
+    const AudioEngine = window.AudioContext || window.webkitAudioContext;
+    if (!AudioEngine) return;
+    catchAudio ||= new AudioEngine();
+    if (catchAudio.state === 'suspended') catchAudio.resume().catch(() => {});
+  } catch {
+    // Audio may be unavailable in this browser.
+  }
+}
+function playCatchSound() {
+  if (!catchAudio || catchAudio.state !== 'running') return;
+  const start = catchAudio.currentTime;
+  const tone = catchAudio.createOscillator();
+  const volume = catchAudio.createGain();
+  tone.type = 'sine';
+  tone.frequency.setValueAtTime(523.25, start);
+  tone.frequency.setValueAtTime(783.99, start + .075);
+  volume.gain.setValueAtTime(.001, start);
+  volume.gain.exponentialRampToValueAtTime(.18, start + .02);
+  volume.gain.exponentialRampToValueAtTime(.001, start + .2);
+  tone.connect(volume);
+  volume.connect(catchAudio.destination);
+  tone.start(start);
+  tone.stop(start + .21);
+}
 function begin() {
+  enableCatchSound();
   total = Math.min(maxRounds, activeWords.length);
   deck = shuffle(activeWords).slice(0,total);
   count = 0;
@@ -208,6 +237,7 @@ function choose(target) {
     return;
   }
   count++;
+  playCatchSound();
   score.textContent = count + ' / ' + total;
   showFeedback('Correct! ' + french + ' = ' + english + '.', 'good');
   if (count < total) {
